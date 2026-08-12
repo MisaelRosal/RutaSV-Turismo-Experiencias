@@ -1,0 +1,55 @@
+# =========================
+# VARIABLES DE ENTORNO Y CREDENCIALES
+# =========================
+.env
+*.env
+.env.*
+secrets/
+*.pem
+*.key
+
+# =========================
+# DEPENDENCIAS Y MÓDULOS
+# =========================
+node_modules/
+jspm_packages/
+packages/
+
+# =========================
+# .NET / C# (Backend)
+# =========================
+[Bb]in/
+[Oo]bj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+*.lock.json
+
+# =========================
+# NODE.JS / VITE (Frontend)
+# =========================
+dist/
+dist-ssr/
+*.local
+.npm
+.eslintcache
+
+# =========================
+# DOCKER Y OTROS
+# =========================
+.docker/
+docker-compose.override.yml
+
+# =========================
+# SISTEMA OPERATIVO / EDITOR
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
