@@ -2,12 +2,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copiar la solución y el proyecto usando los nombres correctos
 COPY ["IguanaSV.Api.sln", "./"]
 COPY ["IguanaSV.Api/IguanaSV.Api.csproj", "IguanaSV.Api/"]
 RUN dotnet restore "IguanaSV.Api/IguanaSV.Api.csproj"
 
-# Copiar el resto del código fuente
 COPY . .
 WORKDIR "/src/IguanaSV.Api"
 RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false

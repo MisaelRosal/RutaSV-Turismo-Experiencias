@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6bPwIwEmU3I=",
+  "dgSpecHash": "cpoLp3frSJ8=",
   "success": true,
   "projectFilePath": "C:\\Users\\misar\\Documents\\VS Code\\API's\\I Guana-SV\\Backend\\IguanaSV.Api\\IguanaSV.Api.csproj",
   "expectedPackageFiles": [
@@ -34,6 +34,8 @@
     "C:\\Users\\misar\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.15\\microsoft.extensions.primitives.9.0.15.nupkg.sha512",
     "C:\\Users\\misar\\.nuget\\packages\\microsoft.openapi\\2.7.5\\microsoft.openapi.2.7.5.nupkg.sha512",
     "C:\\Users\\misar\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
+    "C:\\Users\\misar\\.nuget\\packages\\npgsql\\8.0.0\\npgsql.8.0.0.nupkg.sha512",
+    "C:\\Users\\misar\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0\\npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512",
     "C:\\Users\\misar\\.nuget\\packages\\swashbuckle.aspnetcore\\10.2.3\\swashbuckle.aspnetcore.10.2.3.nupkg.sha512",
     "C:\\Users\\misar\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\10.2.3\\swashbuckle.aspnetcore.swagger.10.2.3.nupkg.sha512",
     "C:\\Users\\misar\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\10.2.3\\swashbuckle.aspnetcore.swaggergen.10.2.3.nupkg.sha512",
