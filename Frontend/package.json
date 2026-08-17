@@ -1,5 +1,5 @@
 {
-  "name": "travel-sv",
+  "name": "i-guana-travel-sv",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -8,7 +8,15 @@
     "build": "vite build",
     "preview": "vite preview"
   },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.18.2",
+    "tailwindcss": "^4.3.3"
+  },
   "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
     "vite": "^8.2.0"
   }
 }
