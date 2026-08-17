@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IguanaSV.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cda808ca0d0041d33647aa51f267f58d06707833")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d21bba2812f5533ffe8b5a44f5b3ca23c95a964")]
 [assembly: System.Reflection.AssemblyProductAttribute("IguanaSV.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IguanaSV.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
