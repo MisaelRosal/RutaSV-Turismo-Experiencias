@@ -1,3 +1,5 @@
+namespace IguanaSV.Api.Models;
+
 public class Anfitrion
 {
     public int Id{get; set;}

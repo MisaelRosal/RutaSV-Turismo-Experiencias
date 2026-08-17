@@ -1,3 +1,5 @@
+namespace IguanaSV.Api.Models;
+
 public class Publicaciones
 {
     public int Id {get; set;}
