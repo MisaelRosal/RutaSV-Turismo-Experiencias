@@ -19,5 +19,5 @@ public partial class ImagenesPublicacion
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual Publicacione Publicacion { get; set; } = null!;
+    public virtual Publicacione? Publicacion { get; set; }
 }

@@ -23,7 +23,7 @@ public partial class Anfitrione
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual Municipio Municipio { get; set; } = null!;
+    public virtual Municipio? Municipio { get; set; }
 
     public virtual ICollection<Publicacione> Publicaciones { get; set; } = new List<Publicacione>();
 }

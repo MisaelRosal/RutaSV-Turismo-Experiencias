@@ -21,5 +21,5 @@ public partial class Notificacione
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual Reserva Reserva { get; set; } = null!;
+    public virtual Reserva? Reserva { get; set; }
 }

@@ -17,5 +17,5 @@ public partial class Municipio
 
     public virtual ICollection<Anfitrione> Anfitriones { get; set; } = new List<Anfitrione>();
 
-    public virtual Departamento Departamento { get; set; } = null!;
+    public virtual Departamento? Departamento { get; set; }
 }
