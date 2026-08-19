@@ -10,7 +10,7 @@ const links = [
 
 export default function Header() {
   return (
-    <header className="bg-cafe-oscuro text-white sticky top-0 z-20 shadow-md">
+    <header className="bg-verde-bosque text-white sticky top-0 z-20 shadow-md">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
         <Link to="/">
           <Logo />
