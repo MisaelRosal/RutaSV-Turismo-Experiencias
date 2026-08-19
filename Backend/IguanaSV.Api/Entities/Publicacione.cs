@@ -37,9 +37,9 @@ public partial class Publicacione
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual Anfitrione Anfitrion { get; set; } = null!;
+    public virtual Anfitrione? Anfitrion { get; set; }
 
-    public virtual Categoria Categoria { get; set; } = null!;
+    public virtual Categoria? Categoria { get; set; }
 
     public virtual ICollection<Experiencia> Experiencia { get; set; } = new List<Experiencia>();
 

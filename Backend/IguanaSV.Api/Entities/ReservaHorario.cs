@@ -11,7 +11,7 @@ public partial class ReservaHorario
 
     public DateTime? CreatedAt { get; set; }
 
-    public virtual Horario Horario { get; set; } = null!;
+    public virtual Horario? Horario { get; set; }
 
-    public virtual Reserva Reserva { get; set; } = null!;
+    public virtual Reserva? Reserva { get; set; }
 }

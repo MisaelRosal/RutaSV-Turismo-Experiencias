@@ -11,7 +11,7 @@ public partial class PublicacionAmenidad
 
     public DateTime? CreatedAt { get; set; }
 
-    public virtual Amenidade Amenidad { get; set; } = null!;
+    public virtual Amenidade? Amenidad { get; set; }
 
-    public virtual Publicacione Publicacion { get; set; } = null!;
+    public virtual Publicacione? Publicacion { get; set; }
 }

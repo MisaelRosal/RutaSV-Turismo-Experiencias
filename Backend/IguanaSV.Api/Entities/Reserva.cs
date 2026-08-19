@@ -31,7 +31,7 @@ public partial class Reserva
 
     public virtual ICollection<Notificacione> Notificaciones { get; set; } = new List<Notificacione>();
 
-    public virtual Publicacione Publicacion { get; set; } = null!;
+    public virtual Publicacione? Publicacion { get; set; }
 
     public virtual ICollection<ReservaHorario> ReservaHorarios { get; set; } = new List<ReservaHorario>();
 }

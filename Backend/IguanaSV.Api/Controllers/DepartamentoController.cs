@@ -1,4 +1,5 @@
 using IguanaSV.Api.Entities;
+using IguanaSV.Api.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +9,9 @@ namespace IguanaSV.Api.Controllers;
 [Route("api/[controller]")]
 public class DepartamentoController : ControllerBase
 {
-    private readonly IguanaContext _context;
+    private readonly IguanasDbContext _context;
 
-    public DepartamentoController(IguanaContext context)
+    public DepartamentoController(IguanasDbContext context)
     {
         _context = context;
     }

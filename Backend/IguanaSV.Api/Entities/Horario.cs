@@ -21,7 +21,7 @@ public partial class Horario
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual Publicacione Publicacion { get; set; } = null!;
+    public virtual Publicacione? Publicacion { get; set; }
 
     public virtual ICollection<ReservaHorario> ReservaHorarios { get; set; } = new List<ReservaHorario>();
 }

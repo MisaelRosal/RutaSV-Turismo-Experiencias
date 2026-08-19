@@ -21,5 +21,5 @@ public partial class Experiencia
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual Publicacione Publicacion { get; set; } = null!;
+    public virtual Publicacione? Publicacion { get; set; }
 }
