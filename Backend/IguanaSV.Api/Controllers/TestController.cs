@@ -1,15 +1,15 @@
-using Microsft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
-[Route("api/[test]")]
+[Route("api/[controller]")]
 [ApiController]
 public class TestController : ControllerBase
 {
-    private readonly TestService_testService;
+    private readonly TestService _testService;
 
     public TestController(TestService testService)
     {
         _testService = testService;
-    }   
+    }
 
     [HttpGet("probar-conexion")]
     public async Task<IActionResult> GetPruebaConexion()
@@ -19,7 +19,7 @@ public class TestController : ControllerBase
         {
             app = "IguanaSV.Api Backend",
             estado = "En linea",
-            conexionBaseDatos = mensaje
+            conexionBaseDatos = mensaje,
             timeStamp = DateTime.UtcNow
         });
     }

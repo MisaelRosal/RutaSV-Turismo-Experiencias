@@ -1,9 +1,8 @@
 # Etapa de compilación
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copiar la solución y el proyecto usando los nombres correctos
-COPY ["IguanaSV.Api.sln", "./"]
+# Copiar el proyecto y restaurar dependencias
 COPY ["IguanaSV.Api/IguanaSV.Api.csproj", "IguanaSV.Api/"]
 RUN dotnet restore "IguanaSV.Api/IguanaSV.Api.csproj"
 
@@ -13,7 +12,7 @@ WORKDIR "/src/IguanaSV.Api"
 RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 
 # Etapa final (Runtime)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 EXPOSE 8080
 COPY --from=build /app/publish .

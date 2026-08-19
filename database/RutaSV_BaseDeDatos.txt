@@ -1,0 +1,1233 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict prZIuU23w9Y3JpDB6ob8MpUsfQZqRVwgkxNtuBDkSqQKQpKIxxRBivWxULc4bnK
+
+-- Dumped from database version 16.15
+-- Dumped by pg_dump version 16.15
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: btree_gist; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS btree_gist WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION btree_gist; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION btree_gist IS 'support for indexing common datatypes in GiST';
+
+
+--
+-- Name: update_updated_at_column(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_updated_at_column() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_updated_at_column() OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: amenidades; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.amenidades (
+    id integer NOT NULL,
+    nombre character varying(50) NOT NULL,
+    icono character varying(50),
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.amenidades OWNER TO postgres;
+
+--
+-- Name: amenidades_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.amenidades_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.amenidades_id_seq OWNER TO postgres;
+
+--
+-- Name: amenidades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.amenidades_id_seq OWNED BY public.amenidades.id;
+
+
+--
+-- Name: anfitriones; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.anfitriones (
+    id integer NOT NULL,
+    municipio_id integer NOT NULL,
+    nombre character varying(100) NOT NULL,
+    email character varying(150) NOT NULL,
+    telefono character varying(20),
+    direccion text,
+    verificado boolean DEFAULT false,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.anfitriones OWNER TO postgres;
+
+--
+-- Name: anfitriones_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.anfitriones_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.anfitriones_id_seq OWNER TO postgres;
+
+--
+-- Name: anfitriones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.anfitriones_id_seq OWNED BY public.anfitriones.id;
+
+
+--
+-- Name: categorias; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.categorias (
+    id integer NOT NULL,
+    nombre character varying(50) NOT NULL,
+    descripcion text,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.categorias OWNER TO postgres;
+
+--
+-- Name: categorias_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.categorias_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.categorias_id_seq OWNER TO postgres;
+
+--
+-- Name: categorias_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.categorias_id_seq OWNED BY public.categorias.id;
+
+
+--
+-- Name: departamentos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.departamentos (
+    id integer NOT NULL,
+    nombre character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.departamentos OWNER TO postgres;
+
+--
+-- Name: departamentos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.departamentos_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.departamentos_id_seq OWNER TO postgres;
+
+--
+-- Name: departamentos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.departamentos_id_seq OWNED BY public.departamentos.id;
+
+
+--
+-- Name: experiencias; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.experiencias (
+    id integer NOT NULL,
+    publicacion_id integer NOT NULL,
+    nombre character varying(200) NOT NULL,
+    descripcion text,
+    duracion_horas integer,
+    precio_adicional numeric(10,2) DEFAULT 0,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT experiencias_precio_adicional_check CHECK ((precio_adicional >= (0)::numeric))
+);
+
+
+ALTER TABLE public.experiencias OWNER TO postgres;
+
+--
+-- Name: experiencias_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.experiencias_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.experiencias_id_seq OWNER TO postgres;
+
+--
+-- Name: experiencias_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.experiencias_id_seq OWNED BY public.experiencias.id;
+
+
+--
+-- Name: horarios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.horarios (
+    id integer NOT NULL,
+    publicacion_id integer NOT NULL,
+    dia_semana integer NOT NULL,
+    hora_inicio time without time zone NOT NULL,
+    hora_fin time without time zone NOT NULL,
+    disponible boolean DEFAULT true,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT horarios_check CHECK ((hora_fin > hora_inicio)),
+    CONSTRAINT horarios_dia_semana_check CHECK (((dia_semana >= 1) AND (dia_semana <= 7)))
+);
+
+
+ALTER TABLE public.horarios OWNER TO postgres;
+
+--
+-- Name: horarios_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.horarios_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.horarios_id_seq OWNER TO postgres;
+
+--
+-- Name: horarios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.horarios_id_seq OWNED BY public.horarios.id;
+
+
+--
+-- Name: imagenes_publicacion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.imagenes_publicacion (
+    id integer NOT NULL,
+    publicacion_id integer NOT NULL,
+    url text NOT NULL,
+    es_principal boolean DEFAULT false,
+    orden integer DEFAULT 0,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.imagenes_publicacion OWNER TO postgres;
+
+--
+-- Name: imagenes_publicacion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.imagenes_publicacion_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.imagenes_publicacion_id_seq OWNER TO postgres;
+
+--
+-- Name: imagenes_publicacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.imagenes_publicacion_id_seq OWNED BY public.imagenes_publicacion.id;
+
+
+--
+-- Name: municipios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.municipios (
+    id integer NOT NULL,
+    departamento_id integer NOT NULL,
+    nombre character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.municipios OWNER TO postgres;
+
+--
+-- Name: municipios_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.municipios_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.municipios_id_seq OWNER TO postgres;
+
+--
+-- Name: municipios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.municipios_id_seq OWNED BY public.municipios.id;
+
+
+--
+-- Name: notificaciones; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.notificaciones (
+    id integer NOT NULL,
+    reserva_id integer NOT NULL,
+    tipo character varying(30) NOT NULL,
+    mensaje text NOT NULL,
+    leida boolean DEFAULT false,
+    destinatario_email character varying(150) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT notificaciones_tipo_check CHECK (((tipo)::text = ANY ((ARRAY['confirmacion'::character varying, 'cancelacion'::character varying, 'recordatorio'::character varying, 'mensaje'::character varying])::text[])))
+);
+
+
+ALTER TABLE public.notificaciones OWNER TO postgres;
+
+--
+-- Name: notificaciones_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.notificaciones_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.notificaciones_id_seq OWNER TO postgres;
+
+--
+-- Name: notificaciones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.notificaciones_id_seq OWNED BY public.notificaciones.id;
+
+
+--
+-- Name: publicacion_amenidad; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.publicacion_amenidad (
+    publicacion_id integer NOT NULL,
+    amenidad_id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.publicacion_amenidad OWNER TO postgres;
+
+--
+-- Name: publicaciones; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.publicaciones (
+    id integer NOT NULL,
+    anfitrion_id integer NOT NULL,
+    categoria_id integer NOT NULL,
+    titulo character varying(200) NOT NULL,
+    descripcion text,
+    precio_por_noche numeric(10,2) NOT NULL,
+    capacidad_maxima integer NOT NULL,
+    habitaciones integer DEFAULT 1,
+    camas integer DEFAULT 1,
+    banos integer DEFAULT 1,
+    direccion_exacta text,
+    latitud numeric(10,8),
+    longitud numeric(11,8),
+    estado character varying(20) DEFAULT 'activo'::character varying,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT publicaciones_capacidad_maxima_check CHECK ((capacidad_maxima > 0)),
+    CONSTRAINT publicaciones_estado_check CHECK (((estado)::text = ANY ((ARRAY['activo'::character varying, 'inactivo'::character varying, 'eliminado'::character varying])::text[]))),
+    CONSTRAINT publicaciones_precio_por_noche_check CHECK ((precio_por_noche >= (0)::numeric))
+);
+
+
+ALTER TABLE public.publicaciones OWNER TO postgres;
+
+--
+-- Name: publicaciones_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.publicaciones_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.publicaciones_id_seq OWNER TO postgres;
+
+--
+-- Name: publicaciones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.publicaciones_id_seq OWNED BY public.publicaciones.id;
+
+
+--
+-- Name: reserva_horario; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.reserva_horario (
+    reserva_id integer NOT NULL,
+    horario_id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.reserva_horario OWNER TO postgres;
+
+--
+-- Name: reservas; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.reservas (
+    id integer NOT NULL,
+    publicacion_id integer NOT NULL,
+    nombre_huesped character varying(100) NOT NULL,
+    email_huesped character varying(150) NOT NULL,
+    telefono_huesped character varying(20),
+    fecha_inicio date NOT NULL,
+    fecha_fin date NOT NULL,
+    numero_huespedes integer NOT NULL,
+    precio_total numeric(10,2) NOT NULL,
+    estado character varying(20) DEFAULT 'pendiente'::character varying,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT reservas_check CHECK ((fecha_fin > fecha_inicio)),
+    CONSTRAINT reservas_estado_check CHECK (((estado)::text = ANY ((ARRAY['pendiente'::character varying, 'confirmada'::character varying, 'cancelada'::character varying, 'finalizada'::character varying])::text[]))),
+    CONSTRAINT reservas_numero_huespedes_check CHECK ((numero_huespedes > 0)),
+    CONSTRAINT reservas_precio_total_check CHECK ((precio_total >= (0)::numeric))
+);
+
+
+ALTER TABLE public.reservas OWNER TO postgres;
+
+--
+-- Name: reservas_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.reservas_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.reservas_id_seq OWNER TO postgres;
+
+--
+-- Name: reservas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.reservas_id_seq OWNED BY public.reservas.id;
+
+
+--
+-- Name: amenidades id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.amenidades ALTER COLUMN id SET DEFAULT nextval('public.amenidades_id_seq'::regclass);
+
+
+--
+-- Name: anfitriones id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.anfitriones ALTER COLUMN id SET DEFAULT nextval('public.anfitriones_id_seq'::regclass);
+
+
+--
+-- Name: categorias id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categorias ALTER COLUMN id SET DEFAULT nextval('public.categorias_id_seq'::regclass);
+
+
+--
+-- Name: departamentos id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.departamentos ALTER COLUMN id SET DEFAULT nextval('public.departamentos_id_seq'::regclass);
+
+
+--
+-- Name: experiencias id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.experiencias ALTER COLUMN id SET DEFAULT nextval('public.experiencias_id_seq'::regclass);
+
+
+--
+-- Name: horarios id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.horarios ALTER COLUMN id SET DEFAULT nextval('public.horarios_id_seq'::regclass);
+
+
+--
+-- Name: imagenes_publicacion id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.imagenes_publicacion ALTER COLUMN id SET DEFAULT nextval('public.imagenes_publicacion_id_seq'::regclass);
+
+
+--
+-- Name: municipios id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.municipios ALTER COLUMN id SET DEFAULT nextval('public.municipios_id_seq'::regclass);
+
+
+--
+-- Name: notificaciones id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notificaciones ALTER COLUMN id SET DEFAULT nextval('public.notificaciones_id_seq'::regclass);
+
+
+--
+-- Name: publicaciones id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicaciones ALTER COLUMN id SET DEFAULT nextval('public.publicaciones_id_seq'::regclass);
+
+
+--
+-- Name: reservas id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservas ALTER COLUMN id SET DEFAULT nextval('public.reservas_id_seq'::regclass);
+
+
+--
+-- Data for Name: amenidades; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.amenidades (id, nombre, icono, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: anfitriones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.anfitriones (id, municipio_id, nombre, email, telefono, direccion, verificado, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: categorias; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.categorias (id, nombre, descripcion, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: departamentos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.departamentos (id, nombre, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: experiencias; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.experiencias (id, publicacion_id, nombre, descripcion, duracion_horas, precio_adicional, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: horarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.horarios (id, publicacion_id, dia_semana, hora_inicio, hora_fin, disponible, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: imagenes_publicacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.imagenes_publicacion (id, publicacion_id, url, es_principal, orden, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: municipios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.municipios (id, departamento_id, nombre, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: notificaciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.notificaciones (id, reserva_id, tipo, mensaje, leida, destinatario_email, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: publicacion_amenidad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.publicacion_amenidad (publicacion_id, amenidad_id, created_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: publicaciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.publicaciones (id, anfitrion_id, categoria_id, titulo, descripcion, precio_por_noche, capacidad_maxima, habitaciones, camas, banos, direccion_exacta, latitud, longitud, estado, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: reserva_horario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.reserva_horario (reserva_id, horario_id, created_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: reservas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.reservas (id, publicacion_id, nombre_huesped, email_huesped, telefono_huesped, fecha_inicio, fecha_fin, numero_huespedes, precio_total, estado, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: amenidades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.amenidades_id_seq', 1, false);
+
+
+--
+-- Name: anfitriones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.anfitriones_id_seq', 1, false);
+
+
+--
+-- Name: categorias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.categorias_id_seq', 1, false);
+
+
+--
+-- Name: departamentos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.departamentos_id_seq', 1, false);
+
+
+--
+-- Name: experiencias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.experiencias_id_seq', 1, false);
+
+
+--
+-- Name: horarios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.horarios_id_seq', 1, false);
+
+
+--
+-- Name: imagenes_publicacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.imagenes_publicacion_id_seq', 1, false);
+
+
+--
+-- Name: municipios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.municipios_id_seq', 1, false);
+
+
+--
+-- Name: notificaciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.notificaciones_id_seq', 1, false);
+
+
+--
+-- Name: publicaciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.publicaciones_id_seq', 1, false);
+
+
+--
+-- Name: reservas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.reservas_id_seq', 1, false);
+
+
+--
+-- Name: amenidades amenidades_nombre_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.amenidades
+    ADD CONSTRAINT amenidades_nombre_key UNIQUE (nombre);
+
+
+--
+-- Name: amenidades amenidades_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.amenidades
+    ADD CONSTRAINT amenidades_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: anfitriones anfitriones_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.anfitriones
+    ADD CONSTRAINT anfitriones_email_key UNIQUE (email);
+
+
+--
+-- Name: anfitriones anfitriones_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.anfitriones
+    ADD CONSTRAINT anfitriones_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categorias categorias_nombre_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categorias
+    ADD CONSTRAINT categorias_nombre_key UNIQUE (nombre);
+
+
+--
+-- Name: categorias categorias_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categorias
+    ADD CONSTRAINT categorias_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: departamentos departamentos_nombre_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.departamentos
+    ADD CONSTRAINT departamentos_nombre_key UNIQUE (nombre);
+
+
+--
+-- Name: departamentos departamentos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.departamentos
+    ADD CONSTRAINT departamentos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: experiencias experiencias_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.experiencias
+    ADD CONSTRAINT experiencias_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: horarios horarios_no_overlap; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.horarios
+    ADD CONSTRAINT horarios_no_overlap EXCLUDE USING gist (publicacion_id WITH =, dia_semana WITH =, tsrange(('2000-01-01'::date + hora_inicio), ('2000-01-01'::date + hora_fin)) WITH &&);
+
+
+--
+-- Name: horarios horarios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.horarios
+    ADD CONSTRAINT horarios_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: imagenes_publicacion imagenes_publicacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.imagenes_publicacion
+    ADD CONSTRAINT imagenes_publicacion_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: municipios municipios_departamento_id_nombre_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.municipios
+    ADD CONSTRAINT municipios_departamento_id_nombre_key UNIQUE (departamento_id, nombre);
+
+
+--
+-- Name: municipios municipios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.municipios
+    ADD CONSTRAINT municipios_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notificaciones notificaciones_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notificaciones
+    ADD CONSTRAINT notificaciones_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: publicacion_amenidad publicacion_amenidad_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicacion_amenidad
+    ADD CONSTRAINT publicacion_amenidad_pkey PRIMARY KEY (publicacion_id, amenidad_id);
+
+
+--
+-- Name: publicaciones publicaciones_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicaciones
+    ADD CONSTRAINT publicaciones_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: reserva_horario reserva_horario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reserva_horario
+    ADD CONSTRAINT reserva_horario_pkey PRIMARY KEY (reserva_id, horario_id);
+
+
+--
+-- Name: reservas reservas_no_overlap; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservas
+    ADD CONSTRAINT reservas_no_overlap EXCLUDE USING gist (publicacion_id WITH =, daterange(fecha_inicio, fecha_fin) WITH &&);
+
+
+--
+-- Name: reservas reservas_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservas
+    ADD CONSTRAINT reservas_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: idx_anfitriones_municipio; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_anfitriones_municipio ON public.anfitriones USING btree (municipio_id);
+
+
+--
+-- Name: idx_experiencias_publicacion; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_experiencias_publicacion ON public.experiencias USING btree (publicacion_id);
+
+
+--
+-- Name: idx_horarios_publicacion; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_horarios_publicacion ON public.horarios USING btree (publicacion_id);
+
+
+--
+-- Name: idx_imagenes_publicacion_publicacion; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_imagenes_publicacion_publicacion ON public.imagenes_publicacion USING btree (publicacion_id);
+
+
+--
+-- Name: idx_municipios_departamento; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_municipios_departamento ON public.municipios USING btree (departamento_id);
+
+
+--
+-- Name: idx_notificaciones_destinatario; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_notificaciones_destinatario ON public.notificaciones USING btree (destinatario_email);
+
+
+--
+-- Name: idx_notificaciones_reserva; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_notificaciones_reserva ON public.notificaciones USING btree (reserva_id);
+
+
+--
+-- Name: idx_publicaciones_anfitrion; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_publicaciones_anfitrion ON public.publicaciones USING btree (anfitrion_id);
+
+
+--
+-- Name: idx_publicaciones_categoria; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_publicaciones_categoria ON public.publicaciones USING btree (categoria_id);
+
+
+--
+-- Name: idx_publicaciones_estado; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_publicaciones_estado ON public.publicaciones USING btree (estado);
+
+
+--
+-- Name: idx_reserva_horario_reserva; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_reserva_horario_reserva ON public.reserva_horario USING btree (reserva_id);
+
+
+--
+-- Name: idx_reservas_estado; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_reservas_estado ON public.reservas USING btree (estado);
+
+
+--
+-- Name: idx_reservas_fechas; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_reservas_fechas ON public.reservas USING btree (fecha_inicio, fecha_fin);
+
+
+--
+-- Name: idx_reservas_publicacion; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_reservas_publicacion ON public.reservas USING btree (publicacion_id);
+
+
+--
+-- Name: amenidades update_amenidades_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_amenidades_updated_at BEFORE UPDATE ON public.amenidades FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: anfitriones update_anfitriones_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_anfitriones_updated_at BEFORE UPDATE ON public.anfitriones FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: categorias update_categorias_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_categorias_updated_at BEFORE UPDATE ON public.categorias FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: departamentos update_departamentos_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_departamentos_updated_at BEFORE UPDATE ON public.departamentos FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: experiencias update_experiencias_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_experiencias_updated_at BEFORE UPDATE ON public.experiencias FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: horarios update_horarios_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_horarios_updated_at BEFORE UPDATE ON public.horarios FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: imagenes_publicacion update_imagenes_publicacion_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_imagenes_publicacion_updated_at BEFORE UPDATE ON public.imagenes_publicacion FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: municipios update_municipios_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_municipios_updated_at BEFORE UPDATE ON public.municipios FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: notificaciones update_notificaciones_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_notificaciones_updated_at BEFORE UPDATE ON public.notificaciones FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: publicaciones update_publicaciones_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_publicaciones_updated_at BEFORE UPDATE ON public.publicaciones FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: reservas update_reservas_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_reservas_updated_at BEFORE UPDATE ON public.reservas FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: anfitriones anfitriones_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.anfitriones
+    ADD CONSTRAINT anfitriones_municipio_id_fkey FOREIGN KEY (municipio_id) REFERENCES public.municipios(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: experiencias experiencias_publicacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.experiencias
+    ADD CONSTRAINT experiencias_publicacion_id_fkey FOREIGN KEY (publicacion_id) REFERENCES public.publicaciones(id) ON DELETE CASCADE;
+
+
+--
+-- Name: horarios horarios_publicacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.horarios
+    ADD CONSTRAINT horarios_publicacion_id_fkey FOREIGN KEY (publicacion_id) REFERENCES public.publicaciones(id) ON DELETE CASCADE;
+
+
+--
+-- Name: imagenes_publicacion imagenes_publicacion_publicacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.imagenes_publicacion
+    ADD CONSTRAINT imagenes_publicacion_publicacion_id_fkey FOREIGN KEY (publicacion_id) REFERENCES public.publicaciones(id) ON DELETE CASCADE;
+
+
+--
+-- Name: municipios municipios_departamento_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.municipios
+    ADD CONSTRAINT municipios_departamento_id_fkey FOREIGN KEY (departamento_id) REFERENCES public.departamentos(id) ON DELETE CASCADE;
+
+
+--
+-- Name: notificaciones notificaciones_reserva_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notificaciones
+    ADD CONSTRAINT notificaciones_reserva_id_fkey FOREIGN KEY (reserva_id) REFERENCES public.reservas(id) ON DELETE CASCADE;
+
+
+--
+-- Name: publicacion_amenidad publicacion_amenidad_amenidad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicacion_amenidad
+    ADD CONSTRAINT publicacion_amenidad_amenidad_id_fkey FOREIGN KEY (amenidad_id) REFERENCES public.amenidades(id) ON DELETE CASCADE;
+
+
+--
+-- Name: publicacion_amenidad publicacion_amenidad_publicacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicacion_amenidad
+    ADD CONSTRAINT publicacion_amenidad_publicacion_id_fkey FOREIGN KEY (publicacion_id) REFERENCES public.publicaciones(id) ON DELETE CASCADE;
+
+
+--
+-- Name: publicaciones publicaciones_anfitrion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicaciones
+    ADD CONSTRAINT publicaciones_anfitrion_id_fkey FOREIGN KEY (anfitrion_id) REFERENCES public.anfitriones(id) ON DELETE CASCADE;
+
+
+--
+-- Name: publicaciones publicaciones_categoria_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicaciones
+    ADD CONSTRAINT publicaciones_categoria_id_fkey FOREIGN KEY (categoria_id) REFERENCES public.categorias(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: reserva_horario reserva_horario_horario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reserva_horario
+    ADD CONSTRAINT reserva_horario_horario_id_fkey FOREIGN KEY (horario_id) REFERENCES public.horarios(id) ON DELETE CASCADE;
+
+
+--
+-- Name: reserva_horario reserva_horario_reserva_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reserva_horario
+    ADD CONSTRAINT reserva_horario_reserva_id_fkey FOREIGN KEY (reserva_id) REFERENCES public.reservas(id) ON DELETE CASCADE;
+
+
+--
+-- Name: reservas reservas_publicacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservas
+    ADD CONSTRAINT reservas_publicacion_id_fkey FOREIGN KEY (publicacion_id) REFERENCES public.publicaciones(id) ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict prZIuU23w9Y3JpDB6ob8MpUsfQZqRVwgkxNtuBDkSqQKQpKIxxRBivWxULc4bnK
+
