@@ -96,6 +96,12 @@ jobs:
             --silent --output /dev/null http://localhost:5000/api/departamento
           echo "Backend OK"
 
+      - name: Diagnóstico en caso de fallo
+        if: failure()
+        run: |
+          docker compose ps -a
+          docker compose logs --tail=80
+
       - name: Apagar y limpiar servicios
         if: always()
         run: docker compose down -v --remove-orphans
